@@ -3,12 +3,20 @@ package com.example.entity;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
   
   @Id
@@ -16,36 +24,43 @@ public abstract class BaseEntity {
   private Long id;
 
   @Column
-  private Date createdAt;
+  @CreatedDate
+  private Date createdDate;
 
   @Column
-  private Date updatedAt;
+  @LastModifiedDate
+  private Date modifiedDate;
 
   @Column
+  @CreatedBy
   private String createdBy;
 
   @Column
-  private String updatedBy;
+  @LastModifiedBy
+  private String modifiedBy;
 
-
-  public long getId() {
+  public Long getId() {
     return this.id;
   }
 
-  public Date getCreatedAt() {
-    return this.createdAt;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
+  public Date getCreatedDate() {
+    return this.createdDate;
   }
 
-  public Date getUpdatedAt() {
-    return this.updatedAt;
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
   }
 
-  public void setUpdatedAt(Date updatedAt) {
-    this.updatedAt = updatedAt;
+  public Date getModifiedDate() {
+    return this.modifiedDate;
+  }
+
+  public void setModifiedDate(Date modifiedDate) {
+    this.modifiedDate = modifiedDate;
   }
 
   public String getCreatedBy() {
@@ -56,12 +71,11 @@ public abstract class BaseEntity {
     this.createdBy = createdBy;
   }
 
-  public String getUpdatedBy() {
-    return this.updatedBy;
+  public String getModifiedBy() {
+    return this.modifiedBy;
   }
 
-  public void setUpdatedBy(String updatedBy) {
-    this.updatedBy = updatedBy;
+  public void setModifiedBy(String modifiedBy) {
+    this.modifiedBy = modifiedBy;
   }
-
 }
